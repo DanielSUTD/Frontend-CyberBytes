@@ -1,0 +1,281 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+/*Formatação geral da página*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Corpo da página */
+body {
+    background: url(/LoginRegister/img/pexels-divinetechygirl-1181271.jpg);
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 0 20px;
+}
+
+/* Formulário geral */
+.form-container {
+    display: flex;
+    width: 450px;
+    height: 600px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    backdrop-filter: blur(20px);
+    overflow: hidden;
+}
+
+/* Coluna do formulário */
+.form-col {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Botões Entrar e Cadastrar - Estrutura */
+.btn-box {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+/* Botões Entrar e Cadastrar Visuais */
+.btn {
+    font-weight: 500;
+    padding: 8px 30px;
+    border: none;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.2);
+    color: black;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: .2s;
+}
+
+/* Botão Entrar */
+.btn-1 {
+    background: #6D9886;
+}
+
+/* Botão Hover */
+.btn:hover {
+    opacity: 0.85;
+}
+
+/* Formulário do Entrar */
+.form-box {
+    position: absolute;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 0 30px;
+    transition: .3s;
+}
+
+/* Título ENTRAR */
+.form-title {
+    margin: 40px 0;
+    color: black;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+/* Formulário do Entrar */
+.login-form {
+    left: 50%;
+}
+
+/* Formulário do Cadastrar */
+.register-form {
+    left: -50%;
+}
+
+/* Formulário do Cadastrar e Título do formulário */
+.register-form .form-title {
+    margin-block: 40px 20px;
+}
+
+
+/* Div form-inputs responsável pelos Inputs(E-mail e Senha) */
+.form-inputs {
+    width: 100%;
+}
+
+/* Div responsável pelos ícones e inputs*/
+.input-box {
+    position: relative;
+}
+
+/* Div responsável pelos inputs do site */
+.inputs {
+    width: 100%;
+    height: 55px;
+    margin: 10px 0;
+    color: black;
+    border: none;
+    border-radius: 50px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Div do campo de texto */
+.input-field {
+    font-size: 16px;
+    padding: 0 40px 0 20px;
+    background: rgba(255, 255, 255, 0.2);
+    outline: none;
+    backdrop-filter: blur(20px);
+}
+
+/* Legenda(E-mail e Senha) */
+::placeholder {
+    color: black;
+    font-size: 15px;
+}
+
+/* ícones de E-mail e Senha */
+.input-box .icon {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    color: black;
+    width: 17px;
+    height: 17px;
+}
+
+/* Div do Forgot-pass(Esqueceu a senha?) */
+.forgot-pass,
+.remember-me {
+    display: flex;
+    justify-content: right;
+    gap: 5px;
+}
+
+/* Link do Forgot-pass(Esqueceu a senha?) */
+.forgot-pass a {
+    color: black;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+/* Link do Forgot-pass(Esqueceu a senha?) Hover */
+.forgot-pass a:hover {
+    text-decoration: underline;
+}
+
+/* Manter-me conectado */
+.remember-me {
+    color: black;
+    font-size: 14px;
+}
+
+/* Botão de Submit(Entrar) */
+.submit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #6D9886;
+    cursor: pointer;
+    transition: .3s;
+}
+
+/* Botão de Submit(Entrar) Hover */
+.submit-btn:hover {
+    gap: 15px;
+}
+
+/* Estilização desses ícones do social-media */
+.social-login {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+
+
+.social-login-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    color: black;
+    cursor: pointer;
+    transition: .2s;
+}
+
+
+
+.social-login-icon {
+    width: 24px;
+}
+
+
+
+.social-login-box:hover {
+    transform: scale(0.9);
+    color: #fff;
+}
+
+/*Formulário multi step*/
+/*Botões*/
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttons button {
+    width: 100px;
+    padding: 5px 10px;
+    margin: 15px;
+}
+
+.buttons button[disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/*Controle dos passos*/
+.step {
+    display: none;
+}
+
+.step.active {
+    display: block;
+}
+
+#code {
+    display: flex;
+    width: 60%;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+/*Remove as setinhas do input type number*/
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.message {
+    display: flex;
+    text-align: center;
+    margin-bottom: 20px;
+}
