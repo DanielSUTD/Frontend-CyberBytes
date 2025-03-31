@@ -10,7 +10,7 @@
 
 /* Corpo da página */
 body {
-    background: url(/ForgotPassword/img/pexels-divinetechygirl-1181271.jpg);
+    background: linear-gradient(to right, white, black);
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
@@ -29,7 +29,7 @@ body {
     height: 600px;
     border: 3px solid rgba(255, 255, 255, 0.3);
     border-radius: 30px;
-    backdrop-filter: blur(20px);
+    background-color: #ebe7e7;;
     overflow: hidden;
 }
 
@@ -47,6 +47,8 @@ body {
     font-weight: 600;
     text-align: center;
 }
+
+
 
 /* Formulário do Esqueceu a senha e Título do formulário */
 .forgot-password .form-title {
@@ -157,6 +159,10 @@ body {
     margin: 0 auto;
 }
 
+#forgotPassword{
+    margin: 0 auto;
+}
+
 /*Remove as setinhas do input type number*/
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
@@ -165,8 +171,15 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .message {
-    display: flex;
+    display: block;
     text-align: center;
-    margin-bottom: 20px;
-    margin-top: 20px;
+    margin: 20px auto;
+    padding: 0 30px;
+    color: #131313;
+    font-size: 15px;
+    line-height: 1.5;
+    max-width: 80%;
 }
+
+
+

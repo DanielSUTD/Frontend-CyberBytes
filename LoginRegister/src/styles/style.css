@@ -10,7 +10,7 @@
 
 /* Corpo da página */
 body {
-    background: url(/LoginRegister/img/pexels-divinetechygirl-1181271.jpg);
+    background: linear-gradient(to right, white, black);
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
@@ -29,7 +29,7 @@ body {
     height: 600px;
     border: 3px solid rgba(255, 255, 255, 0.3);
     border-radius: 30px;
-    backdrop-filter: blur(20px);
+    background-color: #ebe7e7;
     overflow: hidden;
 }
 
@@ -229,7 +229,7 @@ body {
 
 .social-login-box:hover {
     transform: scale(0.9);
-    color: #fff;
+    color:  #6D9886;
 }
 
 /*Formulário multi step*/
@@ -275,7 +275,12 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .message {
-    display: flex;
+    display: block;
     text-align: center;
-    margin-bottom: 20px;
+    margin: 20px auto;
+    padding: 0 30px;
+    color: #131313;
+    font-size: 15px;
+    line-height: 1.5;
+    max-width: 80%;
 }
