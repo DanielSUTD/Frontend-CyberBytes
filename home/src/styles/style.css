@@ -233,40 +233,46 @@ body{
 
 
   /* CARDS */
-  /* Configuração geral dos Cards */
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    margin-top: 2rem;
-  }
+/* Configuração geral dos Cards */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 2rem;
+}
 
-  /* Configuração geral dos Cards */
-  .card {
-    min-height: 13rem;
-  }
+/* Configuração geral dos Cards */
+.card {
+  min-height: 13rem;
+  background-color: #FFFFFF; /* Fundo branco para contraste */
+  border: 1px solid #6D9886; /* Borda com a cor verde */
+  border-radius: 8px; /* Cantos arredondados */
+  padding: 1rem;
+  transition: all 0.3s ease; /* Transição suave para hover */
+}
 
-  /* Configuração geral dos Cards */
-  .card a{
-    text-decoration: none;
-    background-image: linear-gradient(to right, #4fe5ff, #8400ff);
-    color: transparent;
-    background-clip: text;
-    font-size: 1.2rem;
-  }
+/* Configuração geral dos Cards */
+.card a {
+  text-decoration: none;
+  color: #212121; /* Cor do texto escuro */
+  font-size: 1.2rem;
+}
 
-  .card:hover{
-    color: #000;
-    border: #000 2px solid;
-  }
+.card:hover {
+  border: 2px solid #6D9886; /* Borda mais destacada no hover */
+  box-shadow: 0 4px 8px rgba(33, 33, 33, 0.1); /* Sombra sutil */
+  transform: translateY(-5px); /* Efeito de levantar */
+}
 
-  /* Row dos cards */
-  #grupo-cards{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-  }
+/* Row dos cards */
+#grupo-cards {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: #F6F6F6; /* Fundo claro */
+  padding: 2rem;
+}
 
 footer{
     background-color: #111;
@@ -352,6 +358,7 @@ footer{
 @media (max-width: 700px){
     .footerNav ul{
         flex-direction: column;
+        align-items:center;
     } 
     .footerNav ul li{
         width:100%;
