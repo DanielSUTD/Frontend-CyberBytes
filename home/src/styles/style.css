@@ -231,6 +231,43 @@ body{
   }
 
 
+
+  /* CARDS */
+  /* Configuração geral dos Cards */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  /* Configuração geral dos Cards */
+  .card {
+    min-height: 13rem;
+  }
+
+  /* Configuração geral dos Cards */
+  .card a{
+    text-decoration: none;
+    background-image: linear-gradient(to right, #4fe5ff, #8400ff);
+    color: transparent;
+    background-clip: text;
+    font-size: 1.2rem;
+  }
+
+  .card:hover{
+    color: #000;
+    border: #000 2px solid;
+  }
+
+  /* Row dos cards */
+  #grupo-cards{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
 footer{
     background-color: #111;
 }
