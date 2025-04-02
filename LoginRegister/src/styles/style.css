@@ -196,13 +196,13 @@ body {
     gap: 15px;
 }
 
-/* Estilização desses ícones do social-media */
+
+/* Estilização desses ícones do social-media 
 .social-login {
     display: flex;
     gap: 20px;
     margin-top: 20px;
 }
-
 
 
 .social-login-box {
@@ -220,17 +220,16 @@ body {
 }
 
 
-
 .social-login-icon {
     width: 24px;
 }
-
 
 
 .social-login-box:hover {
     transform: scale(0.9);
     color:  #6D9886;
 }
+*/
 
 /*Formulário multi step*/
 /*Botões*/
