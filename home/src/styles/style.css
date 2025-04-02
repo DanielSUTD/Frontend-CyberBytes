@@ -9,6 +9,10 @@
     --max-width: 1200px;
 }
 
+html, body{
+  overflow-x : hidden;
+}
+
 *{
     font-family: 'Poppins' sans-serif;
     padding: 0;
