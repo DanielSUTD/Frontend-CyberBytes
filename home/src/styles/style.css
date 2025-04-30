@@ -208,10 +208,6 @@ body{
   }
   
   @media (width < 900px) {
-    .link a:not(.nav__btn) {
-      display: none;
-    }
-  
     .container {
       grid-template-columns: repeat(1, 1fr);
     }
