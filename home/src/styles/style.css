@@ -205,6 +205,7 @@ body{
   
   .image__content li {
     margin-bottom: 0.5rem;
+    list-style: none;
   }
   
   @media (width < 900px) {
