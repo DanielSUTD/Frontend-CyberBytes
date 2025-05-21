@@ -155,14 +155,14 @@ window.prevStep = prevStep;
 
 
 // Função FETCH (Gerar Código)
-    async function genCode(email) {
+async function genCode(email) {
     try {
         const response = await fetch("http://localhost:8080/user/codigo", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(email) 
+            body: JSON.stringify(email)
         });
 
         if (response.ok) {
@@ -180,32 +180,25 @@ window.prevStep = prevStep;
  */
 async function userAttempt(codeInserted) {
     try {
-        //Recupera os valores do formulário
+        // Recupera os valores do formulário
         const name = document.getElementById('username').value;
         const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+        const password = document.getElementById('regPassword').value;
 
-
-        // Criar objeto FormData para envio multipart
-        const formData = new FormData();
-
-        // Criar objeto user
+        // Cria o objeto user (igual ao UsuarioRequestDto)
         const user = {
             nome: name,
             email: email,
             senha: password
         };
 
-        // Adiciona o JSON como Blob ao FormData
-        formData.append("data", new Blob([JSON.stringify(user)], { type: "application/json" }));
-
-        // Adiciona o parâmetro tentativa (certifique-se de que a variável codeInserted está definida)
-        formData.append("tentativa", codeInserted);
-
-        // Envia para o backend
-        const response = await fetch("http://localhost:8080/user", {
+        // Faz o fetch enviando JSON no body e tentativa na URL
+        const response = await fetch(`http://localhost:8080/auth/register?tentativa=${codeInserted}`, {
             method: "POST",
-            body: formData // Não defina manualmente o header 'Content-Type'
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(user)
         });
 
         console.log("Status da resposta:", response.status);
@@ -213,11 +206,11 @@ async function userAttempt(codeInserted) {
         if (response.ok) {
             console.log('Código validado com sucesso!');
         } else if (response.status === 400) {
-            console.warn(`Código inválido! Tente novamente - Status: ${response.status} - Detalhes: ${response.text}`);
+            const warningText = await response.text();
+            console.warn(`Código inválido! - ${warningText}`);
         } else {
-            const errorText = await response.text(); // Captura o erro detalhado da API
+            const errorText = await response.text();
             console.error('Erro na tentativa de validação:', errorText);
-            throw new Error(`Erro na tentativa de validação - Status: ${response.status}- Body: ${response.text} - Detalhes: ${errorText}`);
         }
     } catch (error) {
         console.error('Erro:', error);
@@ -228,7 +221,7 @@ async function userAttempt(codeInserted) {
  * Controle de Fluxo
  */
 async function handleRegistrationFlow() {
-    const codeInserted = document.getElementById('codigo').value;
+    const codeInserted = document.getElementById('code').value;
     await userAttempt(codeInserted);
 }
 
@@ -239,9 +232,13 @@ async function handleRegistrationFlow() {
 async function login() {
     try {
         const email = document.getElementById("emailLogin").value;
-        const senha = document.getElementById("logPassword").value;
+        const password = document.getElementById("logPassword").value;
 
-        const user = { email, senha };
+        // Cria o objeto user
+        const user = {
+            email: email,
+            password: password
+        };
 
         const response = await fetch("http://localhost:8080/auth/login", {
             method: "POST",
@@ -259,7 +256,7 @@ async function login() {
             // Salva o token e o email no sessionStorage
             sessionStorage.setItem("token", data.token);
             sessionStorage.setItem("email", email);
-            
+
             alert("Login realizado com sucesso!");
             window.location.href = "../Home/index.html";
         } else {
