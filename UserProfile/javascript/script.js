@@ -51,4 +51,12 @@ document.addEventListener('DOMContentLoaded', function () {
             window.location.href = '/LoginRegister/index.html';
         }
     })();
+
+    
+    const cancelButton = document.getElementById('cancelButton');
+    if (cancelButton) { 
+        cancelButton.addEventListener('click', function() {
+            window.location.href = '/Home/index.html'; 
+        });
+    }
 });
