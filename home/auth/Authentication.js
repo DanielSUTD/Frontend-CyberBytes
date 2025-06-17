@@ -1,61 +1,90 @@
-async function obterDadosUsuario(token, email) {
-    try {
-        const response = await fetch(`http://localhost:8080/user/email/${encodeURIComponent(email)}`, {
-            method: "GET",
-            headers: { 
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "application/json"
-            }
-        });
+document.addEventListener('DOMContentLoaded', function () {
+    
+    //Variáveis
+    const loginRegisterLink = document.getElementById("login-register");
+    const userLoggedSection = document.getElementById("user-logged");
+    const userDropdownMenu = document.getElementById("user-dropdown");
+    const userIcon = document.querySelector(".user-icon");
+    const logoutButton = document.getElementById("logout-button"); 
 
-        if (!response.ok) throw new Error("Erro ao buscar os dados do usuário.");
-        return await response.json();
-    } catch (error) {
-        console.error(error);
-        sessionStorage.clear();
-        return null;
-    }
-}
-
-async function verificarAutenticacao() {
-    const token = sessionStorage.getItem("token");
-    const email = sessionStorage.getItem("email");
-
-    const loginRegister = document.getElementById("login-register");
-    const userLogged = document.getElementById("user-logged");
-
-    if (token && email) {
-        const user = await obterDadosUsuario(token, email);
-        if (user) {
-            loginRegister.style.display = "none";
-            userLogged.style.display = "block";
-        } else {
-            loginRegister.style.display = "block";
-            userLogged.style.display = "none";
+    //Atualiza a Interface
+    function updateAuthUI(isLoggedIn) {
+        if (loginRegisterLink) {
+            loginRegisterLink.style.display = isLoggedIn ? 'none' : 'block';
         }
-    } else {
-        loginRegister.style.display = "block";
-        userLogged.style.display = "none";
+        if (userLoggedSection) {
+            userLoggedSection.style.display = isLoggedIn ? 'block' : 'none';
+        }
     }
-}
 
-function toggleUserMenu() {
-  const menu = document.getElementById("user-dropdown");
-  menu.style.display = (menu.style.display === "block") ? "none" : "block";
-}
+    //Requisição de dados da API
+    async function fetchUserData(token, email) {
+        const apiUrl = `http://localhost:8080/user/email/${encodeURIComponent(email)}`;
+        try {
+            const response = await fetch(apiUrl, {
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+            if (!response.ok) throw new Error("Token inválido ou falha na rede.");
+            return await response.json();
+        } catch (error) {
+            console.error("Erro de Autenticação:", error.message);
+            sessionStorage.clear();
+            throw error;
+        }
+    }
 
-document.addEventListener("click", function(event) {
-  const userIcon = document.querySelector(".user-icon");
-  const dropdown = document.getElementById("user-dropdown");
+    //Visibilidade do Menu dropdown
+    function toggleUserMenu() {
+        userDropdownMenu?.classList.toggle('is-active');
+    }
 
-  if (!userIcon.contains(event.target) && !dropdown.contains(event.target)) {
-    dropdown.style.display = "none";
-  }
+    //Logout do usuário
+    function logout() {
+        sessionStorage.clear();
+        window.location.reload();
+    }
+
+    //Verifica a autenticação
+    async function checkAuthentication() {
+        const token = sessionStorage.getItem("token");
+        const email = sessionStorage.getItem("email");
+
+        if (token && email) {
+            //Usuário já logado
+            updateAuthUI(true);
+            try {
+                await fetchUserData(token, email);
+            } catch (error) {
+                //Usuário deslogado
+                updateAuthUI(false);
+            }
+        } else {
+            //Usuário deslogado
+            updateAuthUI(false);
+        }
+    }
+
+
+    // Adiciona o evento de clique ao ícone do usuário para abrir/fechar o menu.
+    if (userIcon) {
+        userIcon.addEventListener('click', toggleUserMenu);
+    }
+
+    // Adiciona o evento de clique ao botão de sair (logout).
+    if (logoutButton) {
+        logoutButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            logout();
+        });
+    }
+    
+    // Adiciona um evento de clique global para fechar o dropdown se o usuário clicar fora dele.
+    document.addEventListener("click", function (event) {
+        if (userIcon && userDropdownMenu && !userIcon.contains(event.target) && !userDropdownMenu.contains(event.target)) {
+            userDropdownMenu.classList.remove('is-active');
+        }
+    });
+
+    // Inicia o processo de verificação de autenticação assim que o script é carregado.
+    checkAuthentication();
 });
-
-function logout() {
-    sessionStorage.clear();
-    window.location.reload();
-}
-
-document.addEventListener("DOMContentLoaded", verificarAutenticacao);

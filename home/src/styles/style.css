@@ -116,6 +116,10 @@ body {
 }
 
 /* Parte do usuário */
+#user-logged {
+    display: none;
+}
+
 /* Ícone do usuário */
 .user-icon {
   margin-top: 0.7rem;
@@ -155,6 +159,10 @@ body {
 /* Dropdown do Usuário(HOVER) */
 .user-dropdown a:hover {
   background-color: #f0f0f0;
+}
+
+.user-dropdown.is-active {
+  display: block;
 }
 
 /* Links Mobile */
