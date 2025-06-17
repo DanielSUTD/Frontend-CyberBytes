@@ -216,6 +216,134 @@ body {
   }
 }
 
+
+/* ChatBot */
+#chatbotModal .modal-content {
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15); 
+    overflow: hidden; 
+}
+
+#chatbotModal .modal-header {
+    background-color: var(--primary-color-dark); 
+    color: var(--white);
+    border-bottom: none;
+    padding: 1rem 1.5rem;
+}
+
+#chatbotModal .modal-header .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%); 
+}
+
+/*Corpo do Chat (Histórico de Mensagens)*/
+#chat-history {
+    height: 400px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px;
+    background-color: var(--secondary-color); 
+}
+
+/* Estilo das Bolhas de Mensagem*/
+.chat-message {
+    padding: 12px 18px;
+    border-radius: 20px;
+    max-width: 85%;
+    word-wrap: break-word;
+    line-height: 1.5;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+.chat-message p {
+    margin: 0;
+}
+
+/* Mensagem da IA (Esquerda) */
+.ai-message {
+    background-color: var(--white); 
+    color: var(--text-color);
+    align-self: flex-start;
+    border-bottom-left-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Mensagem do Usuário (Direita) */
+.user-message {
+    background-color: var(--primary-color); /* Verde do site */
+    color: var(--white);
+    align-self: flex-end;
+    border-bottom-right-radius: 5px;
+}
+
+/* -- Rodapé e Input -- */
+#chat-input-container {
+    display: flex;
+    gap: 10px;
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #dee2e6;
+    background-color: var(--white);
+}
+
+#chat-input-container .form-control {
+    border-radius: 20px;
+    border-color: #ced4da;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#chat-input-container .form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(109, 152, 134, 0.25);
+}
+
+#chat-input-container .btn {
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+#chat-input-container .btn:hover {
+    opacity: 0.9;
+}
+
+/* -- Animações e Detalhes -- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.typing-indicator {
+    align-self: flex-start;
+    font-style: italic;
+    color: #888;
+    padding-left: 15px;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+/* Estilização da Barra de Rolagem (Scrollbar) */
+#chat-history::-webkit-scrollbar {
+    width: 8px;
+}
+#chat-history::-webkit-scrollbar-track {
+    background: var(--secondary-color);
+}
+#chat-history::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+#chat-history::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+}
+
 /* Section */
 /* Configuração geral da seção Section */
 .container {
