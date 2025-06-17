@@ -134,35 +134,45 @@ body {
 /* Dropdown do Usuário */
 .user-dropdown {
   position: absolute;
-  top: 80px;
-  right: 0;
+  top: 70px; 
+  right: 5px;
   background-color: white;
-  border: 1px solid #6D9886;
   border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 10px;
-  display: none;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.15);
+  padding: 8px;
   z-index: 100;
-  min-width: 150px;
+  min-width: 180px;
+  border: 1px solid #eee;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
 }
 
-/* Dropdown do Usuário */
+/* Dropdown ativo */
+.user-dropdown.is-active {
+  visibility: visible; 
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Estilo dos links */
 .user-dropdown a {
-  display: block;
-  padding: 8px 12px;
-  color: #000000;
+  display: flex; 
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  color: #333;
   text-decoration: none;
   font-weight: 500;
-  transition: background-color 0.3s;
+  border-radius: 6px;
+  transition: background-color 0.2s;
 }
 
-/* Dropdown do Usuário(HOVER) */
+/* Estilo dos links(HOVER) */
 .user-dropdown a:hover {
-  background-color: #f0f0f0;
-}
-
-.user-dropdown.is-active {
-  display: block;
+  background-color: #f5f5f5;
+  color: #000;
 }
 
 /* Links Mobile */
@@ -185,7 +195,7 @@ body {
   text-decoration: underline;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
 
   .user-icon {
     margin-top: 0.1rem;
