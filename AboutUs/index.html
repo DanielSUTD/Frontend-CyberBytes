@@ -17,7 +17,7 @@
     <!-- HEADER -->
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container-fluid">
-            <a href="../Home/index.html">
+            <a href="/Home/index.html">
                 <img class="logo" src="/Home/img/Logo.png" alt="Logo">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -31,16 +31,63 @@
                     </button>
                 </form>
                 <ul class="navbar-nav">
+
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><img src="/Home/img/ChatBot.png"></a>
+                        <a class="nav-link" href="#" id="chatbot-toggle"><img src="/Home/img/ChatBot.png"></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../LoginRegister/index.html">Entrar/Cadastrar</a>
+
+                    <!-- Entrar/Cadastrar -->
+                    <li class="nav-item" id="login-register">
+                        <a class="nav-link" href="/LoginRegister/index.html">Entrar/Cadastrar</a>
+                    </li>
+
+                    <!-- Usuário Logado -->
+                    <li class="nav-item" id="user-logged">
+                        <img src="/Home/img/User.png" alt="Usuário" class="user-icon" onclick="toggleUserMenu()">
+
+                        <!-- Desktop -->
+                        <div class="user-dropdown" id="user-dropdown">
+                            <a href="/UserProfile/index.html">
+                                <i class="bi bi-person-circle"></i>Perfil
+                            </a>
+                            <a href="#" id="logout-button">
+                                <i class="bi bi-box-arrow-right"></i>Sair
+                            </a>
+                        </div>
+
+                        <!-- Mobile -->
+                        <div class="user-links-mobile" id="user-links-mobile">
+                            <a href="/UserProfile/index.html">Perfil</a>
+                            <a href="#" id="logout-button">Sair</a>
+                        </div>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
+
+    <!--ChatBot-->
+    <div class="modal fade" id="chatbotModal" tabindex="-1" aria-labelledby="chatbotModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="chatbotModalLabel">CyberBytes Assistant</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="chat-history">
+                    <div class="chat-message ai-message">
+                        <p>Olá! Como posso ajudar você a navegar com mais segurança hoje?</p>
+                    </div>
+                </div>
+                <div class="modal-footer" id="chat-input-container">
+                    <input type="text" class="form-control" id="chat-input" placeholder="Digite sua mensagem...">
+                    <button class="btn btn-primary" type="button" id="send-button">
+                        <i class="bi bi-send-fill"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <!-- Seção explicando o projeto -->
@@ -62,7 +109,9 @@
             </ul>
 
             <h2>Integrantes</h2>
-            <p>O CyberBytes foi desenvolvido por uma equipe multidisciplinar de estudantes de tecnologia comprometidos com a segurança digital. Combinamos habilidades técnicas e visão social para criar soluções acessíveis contra ameaças cibernéticas.</p>
+            <p>O CyberBytes foi desenvolvido por uma equipe multidisciplinar de estudantes de tecnologia comprometidos
+                com a segurança digital. Combinamos habilidades técnicas e visão social para criar soluções acessíveis
+                contra ameaças cibernéticas.</p>
             <ul class="integrantes-list">
                 <li><a href="https://linkedin.com/in/" target="_blank">Daniel Umberto</a></li>
                 <li><a href="https://linkedin.com/in/" target="_blank">Josué Hitalo</a></li>
@@ -75,7 +124,8 @@
             </ul>
 
             <h2>Créditos</h2>
-            <p>Este projeto foi desenvolvido pela equipe CyberBytes, com orientação do professor Weverson Garcia Medeiros. Agradecemos à comunidade acadêmica da UNICEPLAC pelo apoio e colaboração.</p>
+            <p>Este projeto foi desenvolvido pela equipe CyberBytes, com orientação do professor Weverson Garcia
+                Medeiros. Agradecemos à comunidade acadêmica da UNICEPLAC pelo apoio e colaboração.</p>
 
             <h2>Tecnologias utilizadas</h2>
             <p>O projeto CyberBytes foi desenvolvido com tecnologias modernas tanto no front-end quanto no back-end,
@@ -138,6 +188,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
     <script src="/Home/auth/Authentication.js"></script>
+    <script src="/Home/ai/chatbot.js"></script>
     <script src="/AboutUs/src/javascript/script.js"></script>
 </body>
 
