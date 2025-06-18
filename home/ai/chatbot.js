@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Seleção dos Elementos do DOM
-    // Guarda referências aos elementos do HTML para acesso rápido e eficiente.
     const chatbotToggle = document.getElementById('chatbot-toggle');
     const chatbotModalElement = document.getElementById('chatbotModal');
     const chatHistory = document.getElementById('chat-history');
@@ -10,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Inicializa o componente Modal do Bootstrap para podermos controlá-lo via JavaScript.
     const chatbotModal = new bootstrap.Modal(chatbotModalElement);
 
+
     /**
      * Cria e adiciona uma nova "bolha" de mensagem ao histórico do chat.
      * text - O conteúdo de texto da mensagem a ser exibida.
@@ -18,11 +18,11 @@ document.addEventListener('DOMContentLoaded', function () {
     function addMessageToHistory(text, type) {
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('chat-message', `${type}-message`);
-        
+
         const paragraph = document.createElement('p');
         paragraph.textContent = text;
         messageDiv.appendChild(paragraph);
-        
+
         chatHistory.appendChild(messageDiv);
         // Garante que a visualização do chat sempre role para a mensagem mais recente.
         chatHistory.scrollTop = chatHistory.scrollHeight;
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
             indicator.textContent = 'CyberBytes Assistant está digitando...';
             chatHistory.appendChild(indicator);
             chatHistory.scrollTop = chatHistory.scrollHeight;
-        } 
+        }
         // Se for para esconder e o indicador existir, remove-o.
         else if (!show && indicator) {
             indicator.remove();
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Exibe a mensagem do usuário na tela imediatamente para uma UI responsiva.
         addMessageToHistory(userMessage, 'user');
         chatInput.value = ''; // Limpa o campo de texto.
-        
+
         // Informa que a IA está "pensando".
         toggleTypingIndicator(true);
 
@@ -72,9 +72,9 @@ document.addEventListener('DOMContentLoaded', function () {
             const response = await fetch('http://localhost:8080/ia/chat', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'text/plain' 
+                    'Content-Type': 'text/plain'
                 },
-                body: userMessage 
+                body: userMessage
             });
 
             if (!response.ok) {
@@ -94,16 +94,16 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    //Adiciona evento de click ao ícone do chatbot
+    // Abrir o modal ao clicar
     chatbotToggle.addEventListener('click', (event) => {
-        event.preventDefault(); 
+        event.preventDefault();
         chatbotModal.show();
     });
 
-    //Enviar mensagem ao clicar em enviar
+    // Enviar mensagem ao clicar em enviar
     sendButton.addEventListener('click', sendMessage);
 
-    //Enviar mensagem com Enter
+    // Enviar mensagem com Enter
     chatInput.addEventListener('keypress', function (event) {
         if (event.key === 'Enter') {
             sendMessage();
