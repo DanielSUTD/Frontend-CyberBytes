@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root {
-    --primary-color: #6D9886;
-    --primary-color-dark: #212121;
-    --secondary-color: #f9fafe;
-    --text-color: #333333;
-    --white: #ffffff;
-    --max-width: 1200px;
+  --primary-color: #6D9886;
+  --primary-color-dark: #212121;
+  --secondary-color: #f9fafe;
+  --text-color: #333333;
+  --white: #ffffff;
+  --max-width: 1200px;
 }
 
 *{
@@ -21,93 +21,327 @@ body{
     background-color: #F6F6F6;
 }
 
+/* Paleta de Cores: https://colorhunt.co/palette/2121216d9886d9cab3f6f6f6 */
+body {
+  background-color: #F6F6F6;
+}
+
 /* Logo do site */
 .logo {
-    width: 80px; 
-    height: auto; 
+  width: 80px;
+  height: auto;
 }
 
 /* Cor de fundo da NavBar */
 .navbar-custom {
-    background-color: #F6F6F6;
+  background-color: #F6F6F6;
 }
 
 /* Visual dos Links da NavBar */
 .navbar-nav .nav-link {
-    font-weight: bold;
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
 }
 
 /* Ao interagir com o Link, o fundo muda de cor */
 .navbar-nav .nav-link:hover {
-    background-color: #ddd;
+  background-color: #ddd;
 }
 
 /* Visual das imagens */
 .navbar-nav img {
-    width: 24px;
-    height: 24px;
-    transition: transform 0.3s;
+  width: 24px;
+  height: 24px;
+  transition: transform 0.3s;
 }
 
 /* Ao interagir com as imagens, sua escala muda para 1.1 */
 .navbar-nav img:hover {
-    transform: scale(1.3);
+  transform: scale(1.3);
 }
 
 /* Container da barra de pesquisa */
 #search-container {
-    position: relative;
-    display: flex;
-    align-items: center;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 /* Barra de pesquisa escondida inicialmente */
 #search-container input[type="search"] {
-    display: none;
-    width: 220px;
-    padding: 8px 12px;
-    border: 2px solid #6D9886;
-    border-radius: 20px;
-    outline: none;
-    font-size: 16px;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  display: none;
+  width: 220px;
+  padding: 8px 12px;
+  border: 2px solid #6D9886;
+  border-radius: 20px;
+  outline: none;
+  font-size: 16px;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Quando ativado, a barra de pesquisa aparece */
 #search-container.active input[type="search"] {
-    display: inline-block;
+  display: inline-block;
 }
 
 /* Botão de pesquisa estilizado */
 #btn-search {
-    background-color: #6D9886;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    margin-left: 8px;
+  background-color: #6D9886;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  margin-left: 8px;
 }
 
 /* Ícone dentro do botão */
 #btn-search img {
-    width: 18px;
-    height: 18px;
-    filter: invert(1); /* Deixa o ícone branco */
+  width: 18px;
+  height: 18px;
+  filter: invert(1);
 }
 
 /* Efeito ao passar o mouse */
 #btn-search:hover {
-    background-color: #4E7363;
-    transform: scale(1.1);
+  background-color: #4E7363;
+  transform: scale(1.1);
+}
+
+/* Parte do usuário */
+#user-logged {
+    display: none;
+}
+
+/* Ícone do usuário */
+.user-icon {
+  margin-top: 0.7rem;
+  transition: transform 0.3s;
+  cursor: pointer;
+}
+
+.user-icon:hover {
+  transform: scale(1.1);
+}
+
+/* Dropdown do Usuário */
+.user-dropdown {
+  position: absolute;
+  top: 70px; 
+  right: 5px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.15);
+  padding: 8px;
+  z-index: 100;
+  min-width: 180px;
+  border: 1px solid #eee;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+/* Dropdown ativo */
+.user-dropdown.is-active {
+  visibility: visible; 
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Estilo dos links */
+.user-dropdown a {
+  display: flex; 
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+/* Estilo dos links(HOVER) */
+.user-dropdown a:hover {
+  background-color: #f5f5f5;
+  color: #000;
+}
+
+/* Links Mobile */
+.user-links-mobile {
+  display: none;
+  gap: 10px;
+  font-size: 0.95rem;
+  margin-left: 8px;
+}
+
+/* Estilo Links Mobile */
+.user-links-mobile a {
+  text-decoration: none;
+  color: var(--primary-color-dark);
+  font-weight: 600;
+}
+
+/* Estilo Links Mobile(HOVER) */
+.user-links-mobile a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+
+  .user-icon {
+    margin-top: 0.1rem;
+    margin-left: 0.8rem;
+    transition: transform 0.3s;
+    cursor: pointer;
+  }
+
+
+  .user-dropdown {
+    display: none !important;
+  }
+
+  .user-links-mobile {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+
+/* ChatBot */
+#chatbotModal .modal-content {
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15); 
+    overflow: hidden; 
+}
+
+#chatbotModal .modal-header {
+    background-color: var(--primary-color-dark); 
+    color: var(--white);
+    border-bottom: none;
+    padding: 1rem 1.5rem;
+}
+
+#chatbotModal .modal-header .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%); 
+}
+
+/*Corpo do Chat (Histórico de Mensagens)*/
+#chat-history {
+    height: 400px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px;
+    background-color: var(--secondary-color); 
+}
+
+/* Estilo das Bolhas de Mensagem*/
+.chat-message {
+    padding: 12px 18px;
+    border-radius: 20px;
+    max-width: 85%;
+    word-wrap: break-word;
+    line-height: 1.5;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+.chat-message p {
+    margin: 0;
+}
+
+/* Mensagem da IA (Esquerda) */
+.ai-message {
+    background-color: var(--white); 
+    color: var(--text-color);
+    align-self: flex-start;
+    border-bottom-left-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Mensagem do Usuário (Direita) */
+.user-message {
+    background-color: var(--primary-color); /* Verde do site */
+    color: var(--white);
+    align-self: flex-end;
+    border-bottom-right-radius: 5px;
+}
+
+/* -- Rodapé e Input -- */
+#chat-input-container {
+    display: flex;
+    gap: 10px;
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #dee2e6;
+    background-color: var(--white);
+}
+
+#chat-input-container .form-control {
+    border-radius: 20px;
+    border-color: #ced4da;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#chat-input-container .form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(109, 152, 134, 0.25);
+}
+
+#chat-input-container .btn {
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+#chat-input-container .btn:hover {
+    opacity: 0.9;
+}
+
+/* -- Animações e Detalhes -- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.typing-indicator {
+    align-self: flex-start;
+    font-style: italic;
+    color: #888;
+    padding-left: 15px;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+/* Estilização da Barra de Rolagem (Scrollbar) */
+#chat-history::-webkit-scrollbar {
+    width: 8px;
+}
+#chat-history::-webkit-scrollbar-track {
+    background: var(--secondary-color);
+}
+#chat-history::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+#chat-history::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
 }
 
 
