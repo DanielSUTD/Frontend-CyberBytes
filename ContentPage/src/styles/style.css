@@ -445,21 +445,29 @@ body{
 @media (max-width: 992px) {
     /* Altera a direção para coluna em telas menores */
     .content-wrapper {
-        flex-direction: column; 
-        align-items: center;
+        flex-direction: column;
+        align-items: center; 
+        width: 100%; 
+        max-width: 100%;
+        padding: 1rem; 
     }
 
     /* Ajusta o padding e largura do conteúdo principal para telas menores */
     .main-content {
-        padding-left: 0; 
-        width: 100%;
+        padding-left: 0;
+        padding-right: 0; 
+        width: 95%; 
+        max-width: 700px; 
+        margin: 0 auto; 
     }
 
     /* Ajusta a largura e remove o comportamento sticky da sidebar em telas menores */
     .sidebar {
-        width: 90%; 
-        margin-top: 30px; 
-        position: static; 
+        width: 95%; 
+        margin-top: 30px;
+        position: static;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     /* Centraliza o título da sidebar em telas menores */
@@ -469,20 +477,20 @@ body{
 
     /* Torna os links da sidebar horizontais e centralizados em telas menores */
     .sidebar ul {
-        display: flex; 
-        flex-wrap: wrap; 
+        display: flex;
+        flex-wrap: wrap;
         justify-content: center;
         gap: 10px;
     }
 
     /* Remove margem vertical dos itens da lista em telas menores */
     .sidebar ul li {
-        margin-bottom: 0; 
+        margin-bottom: 0;
     }
 
     /* Ajusta o padding e tamanho da fonte dos links da sidebar em telas menores */
     .sidebar ul li a {
-        padding: 8px 12px; 
+        padding: 8px 12px;
         font-size: 0.9rem;
     }
 }
