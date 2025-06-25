@@ -3,7 +3,6 @@ const registerBtn = document.querySelector("#register");
 const loginForm = document.querySelector(".login-form");
 const registerForm = document.querySelector(".register-form");
 
-
 /* Mostrar o formulário de entrar */
 loginBtn.addEventListener('click', () => {
     loginBtn.style.backgroundColor = "#6D9886";
@@ -14,7 +13,7 @@ loginBtn.addEventListener('click', () => {
 
     loginForm.style.opacity = 1;
     registerForm.style.opacity = 0;
-})
+});
 
 /* Mostrar o formulário de cadastrar */
 registerBtn.addEventListener('click', () => {
@@ -26,7 +25,7 @@ registerBtn.addEventListener('click', () => {
 
     loginForm.style.opacity = 0;
     registerForm.style.opacity = 1;
-})
+});
 
 /* Mostrar senha */
 const logInputField = document.getElementById('logPassword');
@@ -39,14 +38,12 @@ const regInputIcon = document.getElementById('reg-pass-icon');
 function myLogPassword() {
     if (logInputField.type === "password") {
         logInputField.type = "text";
-
         logInputIcon.name = "eye-off-outline";
-        logInputIcone.style.cursor = "pointer";
+        logInputIcon.style.cursor = "pointer";
     } else {
         logInputField.type = "password";
-
         logInputIcon.name = "eye-outline";
-        logInputIcone.style.cursor = "pointer";
+        logInputIcon.style.cursor = "pointer";
     }
 }
 
@@ -54,31 +51,30 @@ function myLogPassword() {
 function myRegPassword() {
     if (regInputField.type === "password") {
         regInputField.type = "text";
-
         regInputIcon.name = "eye-off-outline";
         regInputIcon.style.cursor = "pointer";
     } else {
         regInputField.type = "password";
-
         regInputIcon.name = "eye-outline";
         regInputIcon.style.cursor = "pointer";
     }
 }
 
-
 /* Mudar o ícone quando o usuário digitar a senha */
 function changeIcon(value) {
+    // Esta função pretende mudar os ícones tanto para os campos de login quanto de registro.
+    // Pode ser mais apropriado ter funções separadas ou passar qual ícone mudar.
+    // Por enquanto, vou manter assim, mas ela afetará ambos.
     if (value.length > 0) {
         logInputIcon.name = "eye-outline";
         regInputIcon.name = "eye-outline";
     } else {
-        logInputIcon.name = "lock-closed-outline"
-        regInputIcon.name = "lock-closed-outline"
+        logInputIcon.name = "lock-closed-outline";
+        regInputIcon.name = "lock-closed-outline";
     }
 }
 
-
-/*Parte para o controle do formulário multi-setp*/
+/* Parte para o controle do formulário multi-step */
 // Variável que controla qual etapa está ativa
 let currentstep = 1;
 
@@ -96,6 +92,13 @@ function showstep(step) {
     // Atualiza os botões de navegação
     document.getElementById('btn-previous').disabled = step === 1; // Desativa o botão "Anterior" na primeira etapa
     document.getElementById('btn-next').innerText = step === 2 ? 'Enviar' : 'Próximo'; // Muda o texto para "Enviar" na última etapa
+
+    // Desativa o botão 'Próximo'/'Enviar' se estiver na segunda etapa (onde o código é necessário)
+    if (step === 2) {
+        document.getElementById('btn-next').disabled = true;
+    } else {
+        document.getElementById('btn-next').disabled = false;
+    }
 }
 
 /**
@@ -105,13 +108,13 @@ function showstep(step) {
 function validateStep(step) {
     // Seleciona a etapa atual
     const stepElement = document.getElementById(`step${step}`);
-    // Seleciona todos os campos de entrada (inputs) dessa etapa
-    const inputs = stepElement.querySelectorAll('input');
+    // Seleciona todos os campos de entrada (inputs) obrigatórios dessa etapa
+    const inputs = stepElement.querySelectorAll('input[required]'); 
 
     // Verifica se cada campo é válido
     for (const input of inputs) {
         if (!input.checkValidity()) { // Se o campo for inválido
-            alert(`Preencha o campo: ${input.placeholder}`); // Mostra uma mensagem de alerta
+            alert(`Por favor, preencha o campo: ${input.placeholder || input.labels[0]?.textContent || input.id}`); // Mostra uma mensagem de alerta mais descritiva
             return false; // Retorna falso para bloquear o avanço
         }
     }
@@ -129,13 +132,11 @@ async function nextStep() {
         currentstep++; // Avança para a próxima etapa
         showstep(currentstep); // Mostra a nova etapa
 
-        const email = document.getElementById('email').value.trim().replace(/^"|"$/g, '');
+        const email = document.getElementById('email').value.trim();
         await genCode(email); // Gera código quando o usuário avança para a segunda etapa
     } else {
-        //Simula evento de envio
-        console.log("Enviado com sucesso");
-        alert("Enviado com sucesso");
-        handleRegistrationFlow(); // Chamando apenas no submit
+        // Manipula o fluxo de registro (que inclui o envio)
+        handleRegistrationFlow(); 
     }
 }
 
@@ -153,8 +154,12 @@ function prevStep() {
 window.nextStep = nextStep;
 window.prevStep = prevStep;
 
+// Chamada inicial para mostrar a primeira etapa quando o DOM é carregado
+document.addEventListener('DOMContentLoaded', () => {
+    showstep(currentstep);
+});
 
-// Função FETCH (Gerar Código)
+/* Função FETCH (Gerar Código) */
 async function genCode(email) {
     try {
         const response = await fetch("http://localhost:8080/user/codigo", {
@@ -166,12 +171,21 @@ async function genCode(email) {
         });
 
         if (response.ok) {
-            console.log("Código enviado para o email:", email);
+            alert("Código de verificação enviado para o seu e-mail! Agora você pode inserir o código e clicar em 'Enviar'.");
+            document.getElementById('btn-next').disabled = false; // Ativa o botão 'Enviar'
         } else {
-            throw new Error("Erro ao gerar o código!");
+            const errorText = await response.text();
+            if (response.status === 400) {
+                 alert(`Erro: E-mail inválido ou já cadastrado. Por favor, verifique.`);
+            } else {
+                alert(`Erro ao enviar o código. Por favor, tente novamente mais tarde. Detalhes: ${errorText}`);
+            }
+            document.getElementById('btn-next').disabled = true; // Mantém o botão desativado em caso de erro
         }
     } catch (error) {
+        alert("Não foi possível conectar ao servidor para enviar o código. Verifique sua conexão ou tente mais tarde.");
         console.error("Erro:", error);
+        document.getElementById('btn-next').disabled = true; // Mantém o botão desativado em caso de erro de conexão
     }
 }
 
@@ -204,35 +218,49 @@ async function userAttempt(codeInserted) {
         console.log("Status da resposta:", response.status);
 
         if (response.ok) {
-            console.log('Código validado com sucesso!');
-        } else if (response.status === 400) {
+            alert('Cadastro realizado com sucesso! Você já pode fazer login.');
+            // Opcionalmente, mudar para o formulário de login após o cadastro bem-sucedido
+            loginBtn.click();
+        } else if (response.status === 400) { // Bad Request para código inválido
             const warningText = await response.text();
-            console.warn(`Código inválido! - ${warningText}`);
+            alert(`Código de verificação inválido ou expirado! Por favor, tente novamente. Detalhes: ${warningText}`);
+        } else if (response.status === 409) { // Conflito para usuário existente
+            alert('Este e-mail já está cadastrado. Por favor, faça login ou use outro e-mail.');
         } else {
             const errorText = await response.text();
-            console.error('Erro na tentativa de validação:', errorText);
+            alert(`Erro ao finalizar o cadastro. Por favor, tente novamente. Detalhes: ${errorText}`);
         }
     } catch (error) {
+        alert('Não foi possível conectar ao servidor para finalizar o cadastro. Verifique sua conexão ou tente mais tarde.');
         console.error('Erro:', error);
     }
 }
 
 /**
- * Controle de Fluxo
+ * Controle de Fluxo para Registro
  */
 async function handleRegistrationFlow() {
     const codeInserted = document.getElementById('code').value;
+    if (!codeInserted) {
+        alert("Por favor, insira o código de verificação.");
+        return;
+    }
     await userAttempt(codeInserted);
 }
 
 
 /**
- * LOGIN 
+ * LOGIN
  */
 async function login() {
     try {
         const email = document.getElementById("emailLogin").value;
         const password = document.getElementById("logPassword").value;
+
+        if (!email || !password) {
+            alert("Por favor, insira seu e-mail e senha.");
+            return;
+        }
 
         // Cria o objeto user
         const user = {
@@ -258,12 +286,15 @@ async function login() {
             sessionStorage.setItem("email", email);
 
             alert("Login realizado com sucesso!");
-            window.location.href = "../Home/index.html";
+            window.location.href = "../Home/index.html"; // Redireciona para a página inicial
+        } else if (response.status === 401) { // Não autorizado para credenciais incorretas
+            alert("E-mail ou senha incorretos. Por favor, tente novamente.");
         } else {
             const errorText = await response.text();
-            console.error("Erro na tentativa de validação:", errorText);
+            alert(`Erro ao tentar fazer login. Por favor, tente novamente. Detalhes: ${errorText}`);
         }
     } catch (error) {
+        alert("Não foi possível conectar ao servidor para fazer login. Verifique sua conexão ou tente mais tarde.");
         console.error("Erro na requisição:", error);
     }
 }
