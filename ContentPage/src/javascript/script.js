@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+    // --- Mapeamento e Funções de Exibição de Conteúdo ---
     // Mapeamento dos IDs HTML para os campos do DTO da API
     const ELEMENT_MAPPINGS = {
         'titulo': 'titulo1',
@@ -61,12 +62,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // Lógica de Pesquisa
+    // --- Lógica de Pesquisa ---
     const searchContainer = document.getElementById("search-container");
     const searchButton = document.getElementById("btn-search");
+    
+    // Declarações com let para garantir que sejam acessíveis
     let searchInput; 
     let searchResultsDiv;
 
+    // Inicializa elementos de pesquisa se o contêiner existir
     if (searchContainer) {
         searchInput = searchContainer.querySelector("input");
         searchResultsDiv = document.createElement('div');
@@ -74,16 +78,19 @@ document.addEventListener("DOMContentLoaded", () => {
         searchContainer.appendChild(searchResultsDiv);
     } else {
         console.warn("Elemento 'search-container' não encontrado no DOM. A funcionalidade de pesquisa não será inicializada.");
+        // Se o search-container não existe, a funcionalidade de pesquisa não pode operar
+        // então não precisamos anexar listeners relacionados à pesquisa.
         return; 
     }
 
-
     /**
-     * Realiza a pesquisa de páginas na API de backend e exibe os resultados.
-     * @param {string} query - O termo de pesquisa digitado pelo usuário.
+     * Realiza a pesquisa e exibe/navega para os resultados.
+     * @param {string} query - Termo de pesquisa.
+     * @param {boolean} navigateToFirst - Se true, navega para o primeiro resultado.
      */
-    const performSearch = async (query) => {
-        if (!searchResultsDiv || !searchInput) return; // Garante que os elementos existem
+    const performSearch = async (query, navigateToFirst = false) => {
+        // Garante que os elementos de pesquisa existem antes de continuar
+        if (!searchResultsDiv || !searchInput) return; 
 
         if (query.length < 2) {
             searchResultsDiv.innerHTML = '';
@@ -92,6 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
+            // Requisição à API de backend (considera-se que o backend lida com maiúsculas/minúsculas)
             const response = await fetch(`http://localhost:8080/pagina/pesquisar?query=${encodeURIComponent(query)}`);
 
             if (!response.ok) {
@@ -99,10 +107,14 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const pages = await response.json();
-
-            searchResultsDiv.innerHTML = '';
+            searchResultsDiv.innerHTML = ''; // Limpa resultados anteriores
 
             if (pages.length > 0) {
+                if (navigateToFirst) {
+                    window.location.href = `/ContentPage/index.html?titulo=${encodeURIComponent(pages[0].titulo1)}`;
+                    return; // Sai após redirecionar
+                }
+
                 pages.forEach(page => {
                     const resultItem = document.createElement('a');
                     resultItem.href = `/ContentPage/index.html?titulo=${encodeURIComponent(page.titulo1)}`;
@@ -128,52 +140,57 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    /**
-     * Configura o comportamento do botão de pesquisa, alternando a visibilidade do campo
-     * de busca e, opcionalmente, realizando uma pesquisa final.
-     */
-    if (searchButton && searchContainer && searchInput) { // Verifica se todos os elementos existem
-        searchButton.addEventListener("click", function () {
-            if (!searchContainer.classList.contains("active")) {
-                searchContainer.classList.add("active");
-                searchInput.focus();
+    // --- Listeners de Eventos da Pesquisa ---
+    // Configura o comportamento do botão de pesquisa
+    searchButton.addEventListener("click", function () {
+        if (!searchContainer.classList.contains("active")) {
+            searchContainer.classList.add("active");
+            searchInput.focus();
+        } else {
+            if (searchInput.value.trim() !== "") {
+                performSearch(searchInput.value.trim(), true); // Pesquisa e navega
             } else {
-                if (searchInput.value.trim() !== "") {
-                    console.log("Pesquisa final ativada por clique:", searchInput.value);
-                    // Opcional: Redirecionar para uma página de resultados completa
-                    // window.location.href = `/search-results.html?query=${encodeURIComponent(searchInput.value.trim())}`;
-                } else {
-                    searchContainer.classList.remove("active");
-                    searchResultsDiv.style.display = 'none';
-                }
-            }
-        });
-
-        searchInput.addEventListener('input', () => {
-            const query = searchInput.value.trim();
-            performSearch(query);
-        });
-
-        searchInput.addEventListener('blur', (event) => {
-            setTimeout(() => {
-                if (!searchContainer.contains(document.activeElement) && !searchResultsDiv.contains(document.activeElement)) {
-                    searchResultsDiv.style.display = 'none';
-                }
-            }, 100);
-        });
-
-        document.addEventListener('click', (event) => {
-            if (!searchContainer.contains(event.target) && !searchButton.contains(event.target)) {
+                searchContainer.classList.remove("active");
                 searchResultsDiv.style.display = 'none';
-                // Opcional: Para fechar o contêiner de pesquisa ao clicar fora
-                // searchContainer.classList.remove("active");
             }
-        });
-    } else {
-        console.warn("Um ou mais elementos de pesquisa (search-container, btn-search, input) não foram encontrados. A funcionalidade de pesquisa pode não funcionar.");
-    }
+        }
+    });
 
-    // --- Carregamento do Conteúdo da Página ---
+    // Dispara pesquisa em tempo real conforme o usuário digita
+    searchInput.addEventListener('input', () => {
+        const query = searchInput.value.trim();
+        performSearch(query);
+    });
+
+    // Dispara pesquisa e seleciona o primeiro item ao pressionar 'Enter'
+    searchInput.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Evita envio de formulário padrão
+            const query = searchInput.value.trim();
+            if (query.length >= 2) {
+                performSearch(query, true); // Pesquisa e navega
+            }
+        }
+    });
+
+    // Esconde resultados quando o campo de pesquisa perde o foco
+    searchInput.addEventListener('blur', (event) => {
+        setTimeout(() => {
+            if (!searchContainer.contains(document.activeElement) && !searchResultsDiv.contains(document.activeElement)) {
+                searchResultsDiv.style.display = 'none';
+            }
+        }, 100);
+    });
+
+    // Esconde resultados e desativa o contêiner ao clicar fora
+    document.addEventListener('click', (event) => {
+        if (!searchContainer.contains(event.target) && !searchButton.contains(event.target)) {
+            searchResultsDiv.style.display = 'none';
+            searchContainer.classList.remove("active"); // Fecha o contêiner ao clicar fora
+        }
+    });
+
+    // --- Carregamento Inicial do Conteúdo da Página ---
     const params = new URLSearchParams(window.location.search);
     const tituloParam = params.get('titulo');
 
