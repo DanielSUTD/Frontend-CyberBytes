@@ -186,7 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener('click', (event) => {
         if (!searchContainer.contains(event.target) && !searchButton.contains(event.target)) {
             searchResultsDiv.style.display = 'none';
-            searchContainer.classList.remove("active"); // Fecha o contêiner ao clicar fora
+            //searchContainer.classList.remove("active"); // Fecha o contêiner ao clicar fora
         }
     });
 
